@@ -9,6 +9,8 @@ package ru.netology.javaqadiplom;
 public class CreditAccount extends Account {
     protected int creditLimit;
 
+
+
     /**
      * Создаёт новый объект кредитного счёта с заданными параметрами.
      * Если параметры некорректны (кредитный лимит отрицательный и так далее), то
@@ -18,6 +20,7 @@ public class CreditAccount extends Account {
      * @param rate - неотрицательное число, ставка кредитования для расчёта долга за отрицательный баланс
      */
     public CreditAccount(int initialBalance, int creditLimit, int rate) {
+        // Андрей Ц. Возможно потребуется 2 дополнительных исключения для initialBalance и creditLimit
         if (rate <= 0) {
             throw new IllegalArgumentException(
                     "Накопительная ставка не может быть отрицательной, а у вас: " + rate
@@ -39,35 +42,35 @@ public class CreditAccount extends Account {
      */
     @Override
     public boolean pay(int amount) {
-        if (amount <= 0) {
+        if (amount <= 0) {   // воможно стоит дать описание ошибке, для оповещения пользователя
             return false;
         }
-        balance = balance - amount;
-        if (balance > -creditLimit) {
-            balance = -amount;
+        balance = balance - amount;  // рекомендую здесь создать новую переменную для оценки состояния баланса после вычета суммы покупки (например int temporaryBalance = balance - amount)
+        if (balance > -creditLimit) { // далее temporaryBalance сравниваем с -creditLimit (с возможным долгом)
+            balance = -amount;  // в случае успеха в этой строке сумма покупки должна вычитаться из баланса, т.е. balance = balance - amount или balance -= amount (обратить внимание на последовательность "-" и "=")
             return true;
         } else {
-            return false;
+            return false;   // воможно стоит дать описание ошибке, для оповещения пользователя
         }
     }
 
     /**
      * Операция пополнения карты на указанную сумму.
      * В результате успешного вызова этого метода, баланс должен увеличиться
-     * на сумму покупки. Если же операция может привести к некорректному
+     * на сумму покупки *(опечатка - сумма пополнения). Если же операция может привести к некорректному
      * состоянию счёта, то операция должна
      * завершиться вернув false и ничего не поменяв на счёте.
      * @param amount - сумма пополнения
      * @return true если операция прошла успешно, false иначе.
-     * @param amount
-     * @return
+     * @param amount  *(-?)
+     * @return  *(-?)
      */
     @Override
     public boolean add(int amount) {
-        if (amount <= 0) {
+        if (amount <= 0) {  // воможно стоит дать описание ошибке, для оповещения пользователя
             return false;
         }
-        balance = amount;
+        balance = amount; // нет действия пополнения счета. должно быть balance += amount
         return true;
     }
 
@@ -83,8 +86,12 @@ public class CreditAccount extends Account {
     public int yearChange() {
         return balance / 100 * rate;
     }
+    // тут вообще необходимо внедрить логику с if.
+    // При проверке баланса, если balance >= 0, то всегда возвращать 0.
+    // Если нет, то уже выполнять выше описанное действие
 
     public int getCreditLimit() {
         return creditLimit;
     }
+    // тут может быть только логический вопрос, стоит ли добавлять "-" перед  creditLimit. (например мы хотим узнать возможный нижний предел кридита)
 }
