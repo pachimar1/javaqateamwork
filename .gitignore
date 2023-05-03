@@ -1,7 +1,7 @@
 .idea
 target
 *.iml
-
+src/main/java/ru/netology/javaqadiplom/.TempCopiCreditAccount.java
 
 ### IntelliJ IDEA ###
 out/
@@ -38,3 +38,4 @@ bin/
 .idea/
 # Project exclude paths
 /target/
+
