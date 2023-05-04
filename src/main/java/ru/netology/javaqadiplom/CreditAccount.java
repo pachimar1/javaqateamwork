@@ -26,7 +26,7 @@ public class CreditAccount extends Account {
                     "Накопительная ставка не может быть отрицательной, а у вас: " + rate
             );
         }
-        if (balance < 0) {
+        if (initialBalance < 0) {
             throw new IllegalArgumentException(
                     "Баланс не может быть отрицательной, а у вас: " + balance
             );
