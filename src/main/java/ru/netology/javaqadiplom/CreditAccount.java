@@ -20,20 +20,10 @@ public class CreditAccount extends Account {
      * @param rate - неотрицательное число, ставка кредитования для расчёта долга за отрицательный баланс
      */
     public CreditAccount(int initialBalance, int creditLimit, int rate) {
-        // Андрей Ц. Возможно потребуется 2 дополнительных исключения для initialBalance и creditLimit
+        // Андрей Ц.  потребуется 2 дополнительных исключения для initialBalance и creditLimit
         if (rate <= 0) {
             throw new IllegalArgumentException(
                     "Накопительная ставка не может быть отрицательной, а у вас: " + rate
-            );
-        }
-        if (initialBalance < 0) {
-            throw new IllegalArgumentException(
-                    "Баланс не может быть отрицательной, а у вас: " + balance
-            );
-        }
-        if (creditLimit < 0) {
-            throw new IllegalArgumentException(
-                    "Накопительная ставка не может быть отрицательной, а у вас: " + creditLimit
             );
         }
         this.balance = initialBalance;
@@ -52,15 +42,15 @@ public class CreditAccount extends Account {
      */
     @Override
     public boolean pay(int amount) {
-        if (amount <= 0) {   // воможно стоит дать описание ошибке, для оповещения пользователя
+        if (amount <= 0) {
             return false;
         }
-        int temporaryBalance = balance - amount;  // рекомендую здесь создать новую переменную для оценки состояния баланса после вычета суммы покупки (например int temporaryBalance = balance - amount)
-        if (temporaryBalance > -creditLimit) { // далее temporaryBalance сравниваем с -creditLimit (с возможным долгом)
-            balance -= amount;  // в случае успеха в этой строке сумма покупки должна вычитаться из баланса, т.е. balance = balance - amount или balance -= amount (обратить внимание на последовательность "-" и "=")
+        balance = balance - amount;  // рекомендую здесь создать новую переменную для оценки состояния баланса после вычета суммы покупки (например int temporaryBalance = balance - amount)
+        if (balance > -creditLimit) { // далее temporaryBalance сравниваем с -creditLimit (с возможным долгом)
+            balance = -amount;  // в случае успеха в этой строке сумма покупки должна вычитаться из баланса, т.е. balance = balance - amount или balance -= amount (обратить внимание на последовательность "-" и "=")
             return true;
         } else {
-            return false;   // воможно стоит дать описание ошибке, для оповещения пользователя
+            return false;
         }
     }
 
@@ -77,10 +67,10 @@ public class CreditAccount extends Account {
      */
     @Override
     public boolean add(int amount) {
-        if (amount <= 0) {  // воможно стоит дать описание ошибке, для оповещения пользователя
+        if (amount <= 0) {
             return false;
         }
-        balance += amount; // нет действия пополнения счета. должно быть balance += amount
+        balance = amount; // нет действия пополнения счета. должно быть balance += amount
         return true;
     }
 
@@ -94,9 +84,7 @@ public class CreditAccount extends Account {
      */
     @Override
     public int yearChange() {
-        if (balance >= 0) {
-           return 0;
-        } else {return balance / 100 * rate;}
+        return balance / 100 * rate;
     }
     // тут вообще необходимо внедрить логику с if.
     // При проверке баланса, если balance >= 0, то всегда возвращать 0.
@@ -105,5 +93,5 @@ public class CreditAccount extends Account {
     public int getCreditLimit() {
         return creditLimit;
     }
-    // тут может быть только логический вопрос, стоит ли добавлять "-" перед  creditLimit. (например мы хотим узнать возможный нижний предел кридита)
+
 }
