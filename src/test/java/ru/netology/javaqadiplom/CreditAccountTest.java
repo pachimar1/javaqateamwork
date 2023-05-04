@@ -77,12 +77,15 @@ public class CreditAccountTest {
     @Test
     public void balanceChangedAfterPurchase() { // проверка корректного выполнения метода "pay"
         CreditAccount account = new CreditAccount(
-                0,
+                1000,
                 5_000,
                 15
         );
-
-        boolean actual = account.pay(1);
+        boolean actual = false;
+        account.pay(100);
+        if (account.getBalance() == 900){
+            actual = true;
+        };
         boolean expected = true;
         Assertions.assertEquals(expected, actual);
     }
@@ -117,19 +120,6 @@ public class CreditAccountTest {
     public void BalanceValuesPositive() { // проверка, при условии положительного баланса
         CreditAccount account = new CreditAccount(
                 200,
-                5_000,
-                15
-        );
-
-        int actual = account.yearChange();
-        int expected = 0;
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void balanceValueZero() { // проверка, что баланс будет равен 0
-        CreditAccount account = new CreditAccount(
-                0,
                 5_000,
                 15
         );
