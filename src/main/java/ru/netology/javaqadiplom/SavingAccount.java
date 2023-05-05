@@ -42,11 +42,11 @@ public class SavingAccount extends Account {
      */
     @Override
     public boolean pay(int amount) {
-        if (amount <= 0) {
+        if (amount <= 0) { //нужно еще одно условие: || balance - amount < minBalance
             return false;
         }
         balance = balance - amount;
-        if (balance > minBalance) {
+        if (balance >= minBalance) {
             return true;
         } else {
             return false;
@@ -70,7 +70,7 @@ public class SavingAccount extends Account {
             return false;
         }
         if (balance + amount < maxBalance) {
-            balance = amount;
+            balance = amount; //нужно поставить +=
             return true;
         } else {
             return false;
@@ -88,6 +88,15 @@ public class SavingAccount extends Account {
     public int yearChange() {
         return balance / 100 * rate;
     }
+
+//Предлагаю добавить проверку на отрицательный баланс
+    /*    @Override
+    public int yearChange() {
+        if (balance <= 0) {
+            return 0;
+        }
+        return balance / 100 * rate;
+    }*/
 
     public int getMinBalance() {
         return minBalance;
