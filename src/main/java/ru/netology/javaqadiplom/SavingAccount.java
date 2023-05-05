@@ -25,6 +25,16 @@ public class SavingAccount extends Account {
               "Накопительная ставка не может быть отрицательной, а у вас: " + rate
             );
         }
+        if (minBalance < 0) {
+            throw new IllegalArgumentException(
+                    "Минимальный баланс не может быть отрицательным, а у вас: " + minBalance
+            );
+        }
+        if (maxBalance <= minBalance) {
+            throw new IllegalArgumentException(
+                    "Минимальный баланс не может быть больше максимального, а у вас: maxBalance <= minBalance "
+            );
+        }
         this.balance = initialBalance;
         this.minBalance = minBalance;
         this.maxBalance = maxBalance;
@@ -42,15 +52,11 @@ public class SavingAccount extends Account {
      */
     @Override
     public boolean pay(int amount) {
-        if (amount <= 0) { //нужно еще одно условие: || balance - amount < minBalance
+        if (amount <= 0 || balance - amount < minBalance) { //нужно еще одно условие: || balance - amount < minBalance
             return false;
         }
-        balance = balance - amount;
-        if (balance >= minBalance) {
-            return true;
-        } else {
-            return false;
-        }
+        balance -= amount;
+        return true;
     }
 
     /**
@@ -66,15 +72,11 @@ public class SavingAccount extends Account {
      */
     @Override
     public boolean add(int amount) {
-        if (amount <= 0) {
+        if (amount <= 0 || balance + amount > maxBalance) {
             return false;
         }
-        if (balance + amount < maxBalance) {
-            balance = amount; //нужно поставить +=
-            return true;
-        } else {
-            return false;
-        }
+        balance += amount; //нужно поставить +=
+        return true;
     }
 
     /**
@@ -86,6 +88,9 @@ public class SavingAccount extends Account {
      */
     @Override
     public int yearChange() {
+        if (balance <= 0) {
+            return 0;
+        }
         return balance / 100 * rate;
     }
 
