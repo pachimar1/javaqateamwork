@@ -18,6 +18,7 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(2_000 + 3_000, account.getBalance());
     }
+
     @Test
     public void shouldAddEqualsThanMaxBalance() {
         SavingAccount account = new SavingAccount(
@@ -30,6 +31,19 @@ public class SavingAccountTest {
         account.add(8_000);
 
         Assertions.assertEquals(2_000 + 8_000, account.getBalance());
+    }
+    @Test
+    public void shouldAddEqualsThanMinBalance() {
+        SavingAccount account = new SavingAccount(
+                500,
+                1_000,
+                10_000,
+                5
+        );
+
+        account.add(500);
+
+        Assertions.assertEquals(1_000, account.getBalance());
     }
 
     @Test
@@ -45,6 +59,7 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(1_000, account.getBalance());
     }
+
     @Test
     public void shouldNegativePay() {
         SavingAccount account = new SavingAccount(
@@ -58,6 +73,7 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(2_000, account.getBalance());
     }
+
     @Test
     public void shouldYearChangeToNegativeBalance() {
         SavingAccount account = new SavingAccount(
@@ -70,6 +86,7 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(0, account.yearChange());
     }
+
     @Test
     public void shouldYearChangeToPositiveBalance() {
         SavingAccount account = new SavingAccount(
@@ -81,5 +98,52 @@ public class SavingAccountTest {
 
 
         Assertions.assertEquals(30, account.yearChange());
+    }
+
+    @Test
+    public void checkRateForNegativeValue() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    200,
+                    1_000,
+                    10_000,
+                    -15
+            );
+        });
+    }
+
+    @Test
+    public void checkMinBalanceForNegativeValue() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    200,
+                    -1_000,
+                    10_000,
+                    15
+            );
+        });
+    }
+
+    @Test
+    public void checkMaxBalanceForNegativeValue() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    200,
+                    1_000,
+                    -10_000,
+                    15
+            );
+        });
+    }
+    @Test
+    public void checkMinBalanceMoreMaxBalance() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    200,
+                    5_000,
+                    2_000,
+                    15
+            );
+        });
     }
 }
