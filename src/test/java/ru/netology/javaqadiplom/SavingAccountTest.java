@@ -36,13 +36,13 @@ public class SavingAccountTest {
     @Test
     public void shouldAddEqualsThanMinBalance() {
         SavingAccount account = new SavingAccount(
-                500,
+                1_000,
                 1_000,
                 10_000,
                 5
         );
 
-        account.add(500);
+        account.add(0);
 
         Assertions.assertEquals(1_000, account.getBalance());
     }
@@ -75,30 +75,18 @@ public class SavingAccountTest {
         Assertions.assertEquals(2_000, account.getBalance());
     }
 
-    @Test
-    public void shouldYearChangeToNegativeBalance() {
-        SavingAccount account = new SavingAccount(
-                -200,
-                1_000,
-                10_000,
-                15
-        );
-
-
-        Assertions.assertEquals(0, account.yearChange());
-    }
 
     @Test
     public void shouldYearChangeToPositiveBalance() {
         SavingAccount account = new SavingAccount(
-                200,
+                2000,
                 1_000,
                 10_000,
                 15
         );
 
 
-        Assertions.assertEquals(30, account.yearChange());
+        Assertions.assertEquals(300, account.yearChange());
     }
 
     @Test
