@@ -30,6 +30,7 @@ public class CreditAccountTest {
         boolean expected = false;
         Assertions.assertEquals(expected, actual);
     }
+
     @Test
     public void depositAmountNegative2() { // проверка, что сумма пополнения равна 0
         CreditAccount account = new CreditAccount(
@@ -53,6 +54,7 @@ public class CreditAccountTest {
             );
         });
     }
+
     @Test
     public void checkInitialBalanceForNegativeValue() {  // проверка на поломку программы при условии отрицательного значения "initialBalance"
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -63,6 +65,7 @@ public class CreditAccountTest {
             );
         });
     }
+
     @Test
     public void checkCreditLimitForNegativeValue() {  // проверка на поломку программы при условии отрицательного значения "creditLimit"
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
@@ -83,9 +86,10 @@ public class CreditAccountTest {
         );
         boolean actual = false;
         account.pay(100);
-        if (account.getBalance() == 900){
+        if (account.getBalance() == 900) {
             actual = true;
-        };
+        }
+        ;
         boolean expected = true;
         Assertions.assertEquals(expected, actual);
     }
@@ -141,15 +145,6 @@ public class CreditAccountTest {
         int expected = -150;
         Assertions.assertEquals(expected, actual);
     }
-
-
-
-
-
-
-
-
-
 
 
 }
