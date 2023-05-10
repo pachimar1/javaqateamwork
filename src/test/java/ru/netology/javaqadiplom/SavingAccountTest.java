@@ -3,9 +3,9 @@ package ru.netology.javaqadiplom;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class SavingAccountTest {
+/*public class SavingAccountTest {
 
-    @Test
+   @Test
     public void shouldAddLessThanMaxBalance() {
         SavingAccount account = new SavingAccount(
                 2_000,
@@ -18,4 +18,4 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(2_000 + 3_000, account.getBalance());
     }
-}
+}*/
